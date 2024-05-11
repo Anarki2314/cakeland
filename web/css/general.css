@@ -1,0 +1,89 @@
+@font-face {
+    font-family: 'Modak';
+    src: url('./fonts/Modak-Regular.ttf');
+    font-weight: 400;
+}
+
+@font-face{
+    font-family: 'Comfortaa';
+    src: url('./fonts/Comfortaa-Bold.ttf');
+    font-weight: 700;
+}
+
+:root{
+    --color-main: #BE8147;
+    --color-main-light: #DFBE76;
+    --color-main-dark: #935A24;
+    --size-title: clamp(24px, 2.5vw, 36px);
+    --size-text: clamp(14px, 1.5vw, 24px);
+    --size-text-big: clamp(18px, 2vw, 32px);
+    --size-text-small: clamp(12px, 1.5vw, 16px);
+
+    --border-radius: 15px;
+
+}
+*{
+    font-family: 'Comfortaa';
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-main-light);
+}
+.wrapper {
+    min-height: 100dvh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.container-block{
+    margin: 0 auto;
+    width: clamp( 360px, 95vw, 1440px);
+}
+
+
+
+/** HEADER */
+#header{
+    background-color: var(--color-main);
+    box-shadow: 0 0 10px var(--color-main-dark);
+    z-index: 10;
+    border-radius: 0 0 calc(var(--border-radius) * 2) calc(var(--border-radius) * 2) ;
+}
+.navbar-brand{
+    font-family: 'Modak';
+    font-size: var(--size-title);
+    color: var(--color-main-light);
+    text-transform: uppercase;
+}
+
+.navbar-brand:hover{
+    color: var(--color-main-light);
+}
+.navbar-nav{
+
+    align-items: center;
+    gap: clamp( 10px, 4vw, 75px);
+}
+.navbar-nav .nav-link{
+    font-size: clamp(14px, 1.5vw, 20px);
+    color: var(--color-main-dark);
+    text-underline-offset: 3px;
+
+}
+.navbar-nav .nav-link.active{
+    color: var(--color-main-dark);
+    text-decoration: underline;
+}
+
+.navbar-nav .nav-link:hover{
+    text-decoration: underline;
+}
+.navbar-auth{
+    gap: clamp( 10px, 3vw, 40px)
+}
+
+.navbar-auth .nav-link{
+    color: var(--color-main-light);
+}
