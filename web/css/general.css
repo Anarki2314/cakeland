@@ -55,7 +55,30 @@ a:any-link{
 
 
 /** BUTTONS */
+.button-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp( 40px, 5vw, 70px);
+    height: clamp( 40px, 5vw, 70px);
+    border-radius: var(--border-radius);
 
+    img{
+        width: 50%;
+    }
+}
+
+.button-icon.edit{
+    background-color: var(--color-main);
+}
+
+.button-icon.delete{
+    background-color: #C8500C;
+}
+
+.button-icon.info{
+    background-color: var(--color-main-dark);
+}
 .button-view{
     font-size: var(--size-text);
     padding: clamp( 5px, 1vw, 15px) clamp( 20px, 2.5vw, 40px);

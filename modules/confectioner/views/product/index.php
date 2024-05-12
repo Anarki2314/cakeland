@@ -10,6 +10,8 @@ use yii\widgets\Pjax;
 
 // $this->registerCssFile('@web/css/form.css', ['depends' => [BootstrapAsset::class]]);
 $this->registerCssFile('@web/css/table.css', ['depends' => [BootstrapAsset::class]]);
+$this->registerCssFile('@web/css/product.css', ['depends' => [BootstrapAsset::class]]);
+
 /** @var yii\web\View $this */
 /** @var app\models\ProductSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -63,7 +65,13 @@ $this->title = 'Все товары';
                     'label' => 'Действия',
                     'format' => 'html',
                     'content' => function (Product $model) {
-                        return '';
+                        return "<div class='container-product-buttons'>"
+                            //TODO ($model->statusId == Status::getStatusByTitle('На продаже')->id)
+                            . Html::a(Html::img('@web/static/sell-remove-icon.svg'), ['product/delete', 'id' => $model->id], ['class' => 'button-icon delete', 'data' => ['method' => 'post']])
+                            . Html::a(Html::img('@web/static/edit-icon.svg'), ['product/update', 'id' => $model->id], ['class' => 'button-icon edit'])
+                            . Html::a(Html::img('@web/static/info-icon.svg'), ['product/view', 'id' => $model->id], ['class' => 'button-icon info'])
+                            .
+                            "</div>";
                     }
                 ],
             ],

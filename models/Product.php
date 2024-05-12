@@ -25,7 +25,8 @@ use Yii;
  */
 class Product extends \yii\db\ActiveRecord
 {
-
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_UPDATE = 'update';
     public $imageFile;
     /**
      * {@inheritdoc}
@@ -49,9 +50,10 @@ class Product extends \yii\db\ActiveRecord
             [['statusId'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['statusId' => 'id']],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userId' => 'id']],
             [['imageId'], 'exist', 'skipOnError' => true, 'targetClass' => ProductImage::class, 'targetAttribute' => ['imageId' => 'id']],
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg,jpeg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg,jpeg', 'on' => self::SCENARIO_CREATE],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg,jpeg', 'on' => self::SCENARIO_UPDATE],
             ['title', 'match', 'pattern' => '/^[А-Яа-яЁё\-\s]+$/u', 'message' => 'Допускаются только русские буквы и дефис.'],
-            ['description', 'match', 'pattern' => '/^[А-Яа-яЁё\-\s]+$/u', 'message' => 'Допускаются только русские буквы и дефис.'],
+            ['description', 'match', 'pattern' => '/^[А-Яа-яЁё\-\s\d]+$/u', 'message' => 'Допускаются только русские буквы и дефис.'],
             ['description', 'string', 'min' => 100, 'max' => 1000, 'tooShort' => 'Минимальная длина описания 100', 'tooLong' => 'Максимальная длина описания 1000'],
 
             ['quantity', 'integer', 'min' => 1, 'max' => 99, 'tooSmall' => 'Минимальное количество 1', 'tooBig' => 'Максимальное количество 99'],
@@ -84,6 +86,9 @@ class Product extends \yii\db\ActiveRecord
     public function upload()
     {
         if ($this->validate()) {
+            if ($this->imageFile === null) {
+                return true;
+            }
             $fileName = Yii::$app->security->generateRandomString() . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs('uploads/' . $fileName);
             $this->imageFile->name = $fileName;

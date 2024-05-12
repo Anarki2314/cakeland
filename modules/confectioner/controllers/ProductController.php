@@ -5,6 +5,7 @@ namespace app\modules\confectioner\controllers;
 use app\models\Product;
 use app\models\ProductImage;
 use app\models\ProductSearch;
+use app\models\Status;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -72,6 +73,7 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
+        $model->scenario = Product::SCENARIO_CREATE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -106,9 +108,26 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->scenario = Product::SCENARIO_UPDATE;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                if ($model->upload()) {
+                    if ($model->imageFile) {
+                        $image = new ProductImage();
+                        $image->name = $model->imageFile->name;
+                        $image->save();
+                        $model->imageId = $image->id;
+                    }
+
+
+                    $model->save(false);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -125,7 +144,10 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        $model->statusId = Status::getStatusByTitle('Снят с продажи')->id;
+        $model->save(false);
 
         return $this->redirect(['index']);
     }

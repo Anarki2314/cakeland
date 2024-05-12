@@ -1,0 +1,31 @@
+.container-product-buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px
+}
+
+.product-info-items{
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.product-info-item{
+    display: flex;
+    gap: clamp(15px, 2vw, 30px);
+}
+
+.product-info-span{
+    font-size: var(--size-text);
+    color: var(--color-main)
+}
+.product-info-text{
+    font-size: var(--size-text);
+    color: var(--color-main-dark)
+}
+.product-img{
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: calc(var(--border-radius))
+}
