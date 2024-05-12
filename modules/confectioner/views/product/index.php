@@ -65,7 +65,7 @@ $this->title = 'Все товары';
                     'label' => 'Действия',
                     'format' => 'html',
                     'content' => function (Product $model) {
-                        return "<div class='container-product-buttons'>"
+                        return "<div class='container-table-buttons'>"
                             //TODO ($model->statusId == Status::getStatusByTitle('На продаже')->id)
                             . Html::a(Html::img('@web/static/sell-remove-icon.svg'), ['product/delete', 'id' => $model->id], ['class' => 'button-icon delete', 'data' => ['method' => 'post']])
                             . Html::a(Html::img('@web/static/edit-icon.svg'), ['product/update', 'id' => $model->id], ['class' => 'button-icon edit'])

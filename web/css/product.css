@@ -1,9 +1,4 @@
-.container-product-buttons{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px
-}
+
 
 .product-info-items{
     display: flex;
