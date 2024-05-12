@@ -53,4 +53,19 @@ class OrganizationType extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Confectioner::class, ['organizationTypeId' => 'id']);
     }
+
+    public static function getTypes()
+    {
+        return static::find()->select(['title'])->indexBy('id')->column();
+    }
+
+    public static function getTypeById($id)
+    {
+        return static::find()->where(['id' => $id])->one();
+    }
+
+    public static function getTypeByTitle($title)
+    {
+        return static::find()->where(['title' => $title])->one();
+    }
 }

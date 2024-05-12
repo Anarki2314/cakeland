@@ -1,0 +1,28 @@
+.auth-sign-up, .auth-sign-in, .auth-confectioner-sign-up{
+    padding: clamp( 35px, 4vw,70px) 0 ;
+}
+
+.container-passwords{
+    gap: 30px;
+}
+.container-passwords .input-container{
+    flex: 1 1 auto;
+}
+
+.auth-links{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    color: var(--color-main-dark);
+    font-size: var(--size-text);
+
+    & .auth-link{
+        font-size: var(--size-text);
+        text-decoration: none;
+        color: var(--color-main-dark);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+}

@@ -57,7 +57,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     'items' => [
                         Yii::$app->user->isGuest ?
                             ['label' => 'Регистрация', 'url' => ['/auth/sign-up']] : '',
-                        !Yii::$app->user->isGuest ?
+                        !Yii::$app->user->isGuest && Yii::$app->user->identity->isUser ?
                             '<li class="nav-item">
                                 <a class="nav-link" href="/profile/cart"><img src="/static/shopping-bag-icon.svg"></a>
                             '
@@ -89,24 +89,66 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             </div>
         </header>
 
-        <main id="main" class="flex-shrink-0" role="main">
-            <div class="container">
-                <?php if (!empty($this->params['breadcrumbs'])) : ?>
-                    <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-                <?php endif ?>
-                <?= Alert::widget() ?>
-                <?= $content ?>
-            </div>
+        <main id="main" class="flex-shrink-0 m-auto py-5" role="main">
+            <?php if (!empty($this->params['breadcrumbs'])) : ?>
+                <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+            <?php endif ?>
+            <?= Alert::widget() ?>
+            <?= $content ?>
         </main>
 
-        <footer id="footer" class="mt-auto">
-            <div class="container">
-                <div class="row text-muted">
-                    <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-                    <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+        <footer id="footer">
+            <div class="container-block">
+                <div class="container-footer justify-content-between">
+                    <div class="footer-items">
+                        <div class="footer-item">
+                            <?= Html::a('Главная', ['/site/'], ['class' => 'footer-link']) ?>
+                        </div>
+                        <div class="footer-item"><?= Html::a('Каталог', ['/catalog/'], ['class' => 'footer-link']) ?>
+                        </div>
+                    </div>
+                    <div class="footer-items">
+                        <?php if (Yii::$app->user->isGuest) : ?>
+                            <div class="footer-item">
+                                <?= Html::a('Регистрация', ['/auth/sign-up'], ['class' => 'footer-link']) ?>
+                            </div>
+                            <div class="footer-item">
+                                <?= Html::a('Регистрация для кондитеров', ['/auth/confectioner-sign-up'], ['class' => 'footer-link']) ?>
+                            </div>
+                            <div class="footer-item">
+                                <?= Html::a('Авторизация', ['/auth/sign-in'], ['class' => 'footer-link']) ?>
+                            </div>
+                        <?php else : ?>
+                            <?php if (!Yii::$app->user->identity->isAdmin) : ?>
+                                <div class="footer-item">
+                                    <?= Html::a('Личный кабинет', ['/account'], ['class' => 'footer-link']) ?>
+                                </div>
+                            <?php else : ?>
+                                <div class="footer-item">
+                                    <?= Html::a('Панель администратора', ['/admin'], ['class' => 'footer-link']) ?>
+                                </div>
+                            <?php endif ?>
+
+                            <?php if (Yii::$app->user->identity->isUser) : ?>
+                                <div class="footer-item">
+                                    <?= Html::a('Корзина', ['/account/cart'], ['class' => 'footer-link']) ?>
+                                </div>
+                            <?php endif ?>
+
+                        <?php endif ?>
+                    </div>
+
+                    <div class="footer-items d-none d-md-block">
+                        <img src="/static/footer-img.png" class="footer-img">
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>© 2024 Cakeland. Все права защищены.</p>
                 </div>
             </div>
-        </footer>
+    </div>
+    </div>
+    </footer>
 
     </div>
     <?php $this->endBody() ?>

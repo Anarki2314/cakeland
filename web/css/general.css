@@ -30,6 +30,9 @@ body{
     padding: 0;
     background-color: var(--color-main-light);
 }
+a:any-link{
+    text-decoration: none;
+}
 .wrapper {
     min-height: 100dvh;
     margin: 0 auto;
@@ -43,7 +46,43 @@ body{
 }
 
 
+/** TEXT DESIGN */
+.title{
+    font-size: var(--size-title);
+    margin-bottom: clamp( 20px, 2.5vw, 40px);
+    color: var(--color-main-dark);
+}
 
+
+/** BUTTONS */
+
+.button-view{
+    font-size: var(--size-text);
+    padding: clamp( 5px, 1vw, 15px) clamp( 20px, 2.5vw, 40px);
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.button-main{
+    background-color: var(--color-main);
+    color: var(--color-main-light);
+}
+
+.button-main:hover, .button-main:active, .button-main:focus, .button-main:focus-visible{
+    background-color: var(--color-main-dark);
+}
+
+.button-main-dark{
+    background-color: var(--color-main-dark);
+    color: var(--color-main-light);
+}
+
+.button-main-dark:hover, .button-main-dark:active, .button-main-dark:focus, .button-main-dark:focus-visible{
+    background-color: var(--color-main);
+}
 /** HEADER */
 #header{
     background-color: var(--color-main);
@@ -86,4 +125,39 @@ body{
 
 .navbar-auth .nav-link{
     color: var(--color-main-light);
+}
+
+/** FOOTER */
+#footer{
+    background-color: var(--color-main);
+    box-shadow: 0 0 10px var(--color-main-dark);
+    padding: clamp( 35px, 4vw,70px) 0 clamp( 20px, 2.5vw,35px) ; 
+    z-index: 10;
+    border-radius: calc(var(--border-radius) * 2) calc(var(--border-radius) * 2) 0 0;
+}
+
+.container-footer{
+    margin: 0 auto;
+    display: flex;
+}
+
+.footer-items{
+    display: flex;
+    flex-direction: column;
+    gap: clamp( 10px, 3vw, 40px)
+}
+.footer-link{
+    color: var(--color-main-dark);
+    font-size: var(--size-text);
+    text-decoration: none;
+}
+.footer-link:hover{
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.copyright{
+    color: var(--color-main-light);
+    font-size: var(--size-text-small);
+    text-align: center;
+    margin-top: 20px;
 }

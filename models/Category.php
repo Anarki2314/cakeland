@@ -5,21 +5,21 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "status".
+ * This is the model class for table "category".
  *
  * @property int $id
  * @property string $title
  *
- * @property Confectioner[] $confectioners
+ * @property Product[] $products
  */
-class Status extends \yii\db\ActiveRecord
+class Category extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'status';
+        return 'category';
     }
 
     /**
@@ -45,26 +45,26 @@ class Status extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Confectioners]].
+     * Gets query for [[Products]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getConfectioners()
+    public function getProducts()
     {
-        return $this->hasMany(Confectioner::class, ['statusId' => 'id']);
+        return $this->hasMany(Product::class, ['categoryId' => 'id']);
     }
 
-    public static function getStatuses()
+    public static function getCategories()
     {
         return static::find()->select(['title'])->indexBy('id')->column();
     }
 
-    public static function getStatusById($id)
+    public static function getCategoryById($id)
     {
-        return static::findOne($id);
+        return static::find()->where(['id' => $id])->one();
     }
 
-    public static function getStatusByTitle($title)
+    public static function getCategoryByTitle($title)
     {
         return static::find()->where(['title' => $title])->one();
     }

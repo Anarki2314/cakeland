@@ -11,6 +11,11 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'modules' => [
+        'confectioner' => [
+            'class' => 'app\modules\confectioner\Module',
+        ],
+    ],
     'language' => 'ru-RU',
     'name' => 'Cakeland',
     'components' => [

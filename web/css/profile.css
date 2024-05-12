@@ -1,0 +1,43 @@
+.container-profile{
+    gap: 30px;
+}
+.container-profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.container-profile-buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.profile-button{
+    display: flex;
+
+}
+
+.profile-info-block{
+    display: flex;
+    width: clamp(360px, 50vw, 568px);
+    flex-direction: column;
+    gap: 20px;
+    padding: clamp(15px, 2vw, 30px);
+    border-radius: calc(var(--border-radius) * 2);
+    background-color: var(--color-main);
+}
+
+.profile-info-block-item{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--color-main-dark);
+}
+.profile-info-span{
+    font-size: var(--size-text);
+    color: var(--color-main-light);
+}
+
+.profile-info-text{
+    font-size: var(--size-text);
+    color: var(--color-main-dark);
+}

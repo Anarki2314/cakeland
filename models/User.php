@@ -48,9 +48,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['login'], 'unique'],
             [['email'], 'unique'],
             [['roleId'], 'exist', 'skipOnError' => true, 'targetClass' => Role::class, 'targetAttribute' => ['roleId' => 'id']],
-            ['fullName', 'match', 'pattern' => '/^([а-яА-ЯёЁ\s]+){3}([а-яА-ЯёЁ\]+){1}$/u', 'message' => 'Допустимы только русские буквы, формат: "Фамилия Имя Отчество"'],
+            ['fullName', 'match', 'pattern' => '/^[а-яА-ЯёЁ]+ [а-яА-ЯёЁ]+ [а-яА-ЯёЁ]+$/u', 'message' => 'Допустимы только русские буквы, формат: "Фамилия Имя Отчество"'],
             ['login', 'match', 'pattern' => '/^[a-zA-Z0-9]+$/u', 'message' => 'Допустимы только буквы и цифры'],
-            ['password', 'compare', 'compareAttribute' => 'passwordRepeat', 'message' => 'Пароли не совпадают'],
+            ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => 'Пароли не совпадают'],
             ['password', 'string', 'min' => 6],
             ['password', 'match', 'pattern' => '/^[a-zA-Z0-9]+$/u', 'message' => 'Допустимы только буквы и цифры'],
         ];
@@ -75,12 +75,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
+
     public function validatePassword($password)
     {
         return Yii::$app->security->validatePassword($password, $this->passwordHash);
     }
 
-    public function findByLogin($login)
+    public static function findByLogin($login)
     {
         return static::findOne(['login' => $login]);
     }
@@ -88,6 +89,31 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getIsAdmin()
     {
         return $this->roleId == Role::getRoleByTitle('admin')->id;
+    }
+
+    public function getIsConfectioner()
+    {
+        return $this->roleId == Role::getRoleByTitle('confectioner')->id;
+    }
+
+    public function getIsUser()
+    {
+        return $this->roleId == Role::getRoleByTitle('user')->id;
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($insert) {
+            $this->passwordHash = Yii::$app->security->generatePasswordHash($this->password);
+            $this->authKey = Yii::$app->security->generateRandomString();
+        }
+
+        // ...custom code here...
+        return true;
     }
 
     /**
@@ -99,6 +125,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Confectioner::class, ['userId' => 'id']);
     }
+
+
 
     /**
      * Gets query for [[Role]].
